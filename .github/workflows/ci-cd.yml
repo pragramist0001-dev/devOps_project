@@ -26,7 +26,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/my-node-app:latest
+        tags: pragramist0001/my-node-app:latest
 
     - name: Set up kubectl
       uses: azure/setup-kubectl@v3
