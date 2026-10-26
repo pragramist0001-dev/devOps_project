@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: node-app-deployment
+  namespace: default
 spec:
   replicas: 2
   selector:
@@ -14,7 +15,7 @@ spec:
     spec:
       containers:
       - name: node-app
-      image: pragramist0001/my-node-app:latest
+        image: pragramist0001/node-app:latest
         ports:
         - containerPort: 3000
 ---
@@ -22,11 +23,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: node-app-service
+  namespace: default
 spec:
-  type: LoadBalancer # yoki NodePort
+  type: NodePort
   selector:
     app: node-app
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 3000
+      nodePort: 30007
