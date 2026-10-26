@@ -1,4 +1,4 @@
-name: CI/CD Pipeline to Kubernetes
+name: Node.js CI/CD to Kubernetes
 
 on:
   push:
@@ -26,20 +26,20 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/my-node-app:latest
 
     - name: Set up kubectl
       uses: azure/setup-kubectl@v3
       with:
         version: 'latest'
 
-    - name: Configure Kubernetes cluster access
+    - name: Configure Kubernetes Context
       uses: azure/k8s-set-context@v3
       with:
         method: kubeconfig
         kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
 
-    - name: Deploy to Kubernetes
+    - name: Deploy to Kubernetes Cluster
       run: |
-        kubectl apply -f k8s/deployment.yaml
-        kubectl rollout restart deployment/my-app-deployment
+        kubectl apply -f k8s/app-deployment.yaml
+        kubectl rollout restart deployment/node-app-deployment
